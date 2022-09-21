@@ -12,14 +12,21 @@ pipeline {
             }
         }
 
-        stage('Build') { 
-            steps { 
-            //     script{
-            //      app = docker.build("underwater")
-            //     }
-            // }
-            docker build -t getting-started .
-        }
+        // stage('Build') { 
+        //     steps { 
+        //     //     script{
+        //     //      app = docker.build("underwater")
+        //     //     }
+        //     // }
+        //     docker build -t getting-started .
+        // }
+        stage('build') {
+    steps {
+         sh '''#!/bin/bash
+                 docker build -t getting-started1 .
+         '''
+    }
+}
         stage('Test'){
             steps {
                  echo 'Empty'
