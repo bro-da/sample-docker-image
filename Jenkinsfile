@@ -4,7 +4,7 @@ pipeline {
   stage('Docker Build and Tag') {
            steps {
               
-                sh 'docker build -t nodebuild:latest .' 
+                sh 'docker build -t .' 
                   sh 'docker tag nodebuild vivans/nodebuild::latest'
                 // sh 'docker tag nodebuild vivans/sample-build::$BUILD_NUMBER'
                
