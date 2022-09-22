@@ -12,7 +12,7 @@ pipeline {
 7
     agent any 
 8
-//     stages { 
+    stages { 
 // 9
 //         stage('Cloning our Git') { 
 // 10
