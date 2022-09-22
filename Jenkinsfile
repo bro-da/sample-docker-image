@@ -5,11 +5,11 @@ node {
        
             app = docker.build("vivans/sample-build")    
        }
-       stage('docker login ')  {
+//        stage('docker login ')  {
 
-        sh 'docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD'
+//         sh 'docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD'
 
-       }  
+//        }  
       stage('Test image') {           
             app.inside {            
              
