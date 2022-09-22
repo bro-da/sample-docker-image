@@ -14,7 +14,7 @@ pipeline {
   stage('Publish image to Docker Hub') {
           
             steps {
-        withDockerRegistry([ credentialsId: "dockerHub", url: "" ]) {
+        withDockerRegistry([ credentialsId: "dockerhub_id", url: "https://hub.docker.com/repository/docker/vivans/sample-build" ]) {
           sh  'docker push vivans/sample-build::latest'
           sh  'docker push vivans/sample-build::$BUILD_NUMBER' 
         }
