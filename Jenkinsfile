@@ -1,46 +1,40 @@
 pipeline {
     agent any
-    options {
-        skipStagesAfterUnstable()
-    }
-    stages {
-         stage('Clone repository') { 
-            steps { 
-                script{
-                checkout scm
-                }
-            }
+ stages {
+  stage('Docker Build and Tag') {
+           steps {
+              
+                sh 'docker build -t nginxtest:latest .' 
+                  sh 'docker tag nginxtest vivans/sample-build:latest'
+                sh 'docker tag nginxtest vivans/sample-build:$BUILD_NUMBER'
+               
+          }
         }
-
-        // stage('Build') { 
-        //     steps { 
-        //     //     script{
-        //     //      app = docker.build("underwater")
-        //     //     }
-        //     // }
-        //     docker build -t getting-started .
-        // }
-        stage('build') {
-    steps {
-         sh '''#!/bin/bash
-                 docker build -t getting-started1 .
-         '''
-    }
-}
-        stage('Test'){
+     
+  stage('Publish image to Docker Hub') {
+          
             steps {
-                 echo 'Empty'
-            }
+        withDockerRegistry([ credentialsId: "dockerHub", url: "" ]) {
+          sh  'docker push vivans/sample-build:latest'
+          sh  'docker push vivans/sample-build:$BUILD_NUMBER' 
         }
-        stage('Deploy') {
-            steps {
-                script{
-                        docker.withRegistry('public.ecr.aws/l2m3f3d0/bro-da', 'ecr:us-east-1:aws-credentials') {
-                    app.push("${env.BUILD_NUMBER}")
-                    app.push("latest")
-                    }
-                }
-            }
+                  
+          }
+        }
+     
+//       stage('Run Docker container on Jenkins Agent') {
+             
+//             steps {
+//                 sh "docker run -d -p 4030:80 vivans/sample-build:"
+ 
+//             }
+//         }
+//  stage('Run Docker container on remote hosts') {
+             
+//             steps {
+//                 sh "docker -H ssh://jenkins@172.31.28.25 run -d -p 4001:80 vivans/sample-build:"
+ 
+//             }
         }
     }
 }
