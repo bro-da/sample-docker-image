@@ -1,46 +1,71 @@
-pipeline {
-    agent any
-    options {
-        skipStagesAfterUnstable()
+pipeline { 
+2
+    environment { 
+3
+        registry = "YourDockerhubAccount/YourRepository" 
+4
+        registryCredential = 'dockerhub_id' 
+5
+        dockerImage = '' 
+6
     }
-    stages {
-         stage('Clone repository') { 
+7
+    agent any 
+8
+    stages { 
+9
+        stage('Cloning our Git') { 
+10
             steps { 
-                script{
-                checkout scm
+11
+                git 'https://github.com/YourGithubAccount/YourGithubRepository.git' 
+12
+            }
+13
+        } 
+14
+        stage('Building our image') { 
+15
+            steps { 
+16
+                script { 
+17
+                    dockerImage = docker.build registry + ":$BUILD_NUMBER" 
+18
                 }
-            }
+19
+            } 
+20
         }
-
-        // stage('Build') { 
-        //     steps { 
-        //     //     script{
-        //     //      app = docker.build("underwater")
-        //     //     }
-        //     // }
-        //     docker build -t getting-started .
-        // }
-        stage('build') {
-    steps {
-         sh '''#!/bin/bash
-                 docker build -t getting-started1 .
-         '''
-    }
-}
-        stage('Test'){
-            steps {
-                 echo 'Empty'
-            }
-        }
-        stage('Deploy') {
-            steps {
-                script{
-                        docker.withRegistry('public.ecr.aws/l2m3f3d0/bro-da', 'ecr:us-east-1:aws-credentials') {
-                    app.push("${env.BUILD_NUMBER}")
-                    app.push("latest")
+21
+        stage('Deploy our image') { 
+22
+            steps { 
+23
+                script { 
+24
+                    docker.withRegistry( '', registryCredential ) { 
+25
+                        dockerImage.push() 
+26
                     }
-                }
+27
+                } 
+28
             }
-        }
+29
+        } 
+30
+        stage('Cleaning up') { 
+31
+            steps { 
+32
+                sh "docker rmi $registry:$BUILD_NUMBER" 
+33
+            }
+34
+        } 
+35
     }
+36
 }
