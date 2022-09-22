@@ -7,7 +7,7 @@ node {
        }
        stage('docker login ')  {
 
-        sh 'echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin'
+        sh 'docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD'
 
        }  
       stage('Test image') {           
