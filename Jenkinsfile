@@ -7,7 +7,7 @@ node {
        }
        stage('docker login ')  {
 
-        sh 'docker login -u vivans'
+        sh 'docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD'
 
        }  
       stage('Test image') {           
