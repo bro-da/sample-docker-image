@@ -3,7 +3,7 @@ node {
            
       stage('Build image') {         
        
-            app = docker.build("vivans/test")    
+            app = docker.build("vivans/sample-build")    
        }     
       stage('Test image') {           
             app.inside {            
