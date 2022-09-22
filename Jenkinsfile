@@ -2,7 +2,7 @@ pipeline {
 2
     environment { 
 3
-        registry = "YourDockerhubAccount/YourRepository" 
+        registry = "https://hub.docker.com/repository/docker/vivans/sample-build" 
 4
         registryCredential = 'dockerhub_id' 
 5
@@ -18,7 +18,7 @@ pipeline {
 10
             steps { 
 11
-                git 'https://github.com/YourGithubAccount/YourGithubRepository.git' 
+                git 'https://github.com/bro-da/sample-docker-image' 
 12
             }
 13
