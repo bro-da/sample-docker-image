@@ -5,8 +5,8 @@ pipeline {
            steps {
               
                 sh 'docker build -t nodebuild:latest .' 
-                  sh 'docker tag nodebuild vivans/nodebuild::latest'
-                sh 'docker tag nodebuild vivans/nodebuild::$BUILD_NUMBER'
+                  sh 'docker tag nodebuild vivans/sample-build::latest'
+                // sh 'docker tag nodebuild vivans/sample-build::$BUILD_NUMBER'
                
           }
         }
@@ -14,9 +14,9 @@ pipeline {
   stage('Publish image to Docker Hub') {
           
             steps {
-        withDockerRegistry([ credentialsId: "dockerhub_id", url: "https://hub.docker.com/" ]) {
-          sh  'docker push vivans/nodebuild::latest'
-          sh  'docker push vivans/nodebuild::$BUILD_NUMBER' 
+        withDockerRegistry([ credentialsId: "dockerhub_id", url: "https://hub.docker.com/repository/docker/vivans/sample-build" ]) {
+          sh  'docker push vivans/sample-build::latest'
+          sh  'docker push vivans/sample-build::$BUILD_NUMBER' 
         }
                   
           }
