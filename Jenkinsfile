@@ -4,9 +4,9 @@ pipeline {
   stage('Docker Build and Tag') {
            steps {
               
-                sh 'docker build -t nginxtest:latest .' 
-                  sh 'docker tag nginxtest vivans/sample-build::latest'
-                sh 'docker tag nginxtest vivans/sample-build::$BUILD_NUMBER'
+                sh 'docker build -t nodebuild:latest .' 
+                  sh 'docker tag nodebuild vivans/sample-build::latest'
+                sh 'docker tag nodebuild vivans/sample-build::$BUILD_NUMBER'
                
           }
         }
