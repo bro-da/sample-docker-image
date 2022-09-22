@@ -4,7 +4,12 @@ node {
       stage('Build image') {         
        
             app = docker.build("vivans/sample-build")    
-       }     
+       }
+       stage('docker login ')  {
+
+        sh 'docker login -u vivans'
+
+       }  
       stage('Test image') {           
             app.inside {            
              
