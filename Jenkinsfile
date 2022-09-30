@@ -1,5 +1,12 @@
 node {    
-      def app     
+      def app
+      stage('ls image') {           
+                       
+             
+             sh 'la -al'        
+               
+        }
+          
            
       stage('Build image') {         
        
