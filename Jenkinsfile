@@ -3,7 +3,7 @@ node {
       stage('ls image') {           
                        
              
-             sh 'la -al'        
+             sh 'ls -al'        
                
         }
           
